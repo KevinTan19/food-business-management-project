@@ -1,17 +1,10 @@
 import { combineReducers } from "redux";
 import userReducer from "./userReducer";
-// let initialState = { value: 15, posts: [], users: [] };
-// function RootReducer(state = initialState, action) {
-//   switch (action.type) {
-//     case "posts/fetchSuccess":
-//       return { ...state, posts: action.payload };
-//     default:
-//       return state;
-//   }
-// }
+import itemReducer from "./itemReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  item: itemReducer,
 });
 
 export default rootReducer;
