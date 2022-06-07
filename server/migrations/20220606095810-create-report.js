@@ -23,6 +23,10 @@ module.exports = {
           key: "id",
         },
       },
+      transactionNumber: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

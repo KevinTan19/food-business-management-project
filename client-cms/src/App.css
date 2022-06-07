@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,700&family=Merriweather:wght@300&family=Montserrat&display=swap');
+
+html,
+body {
+  height: 100%;
+  background-color: rgba(253, 246, 236, 0.918) !important;
+}
+
+.navbar {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    margin-top: 5%;
+    margin-bottom: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+Form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    text-align: left;
+}
+
+
+.App {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+}
