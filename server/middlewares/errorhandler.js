@@ -40,6 +40,7 @@ function errorHandler(err, req, res, next) {
       },
     });
   } else {
+    console.log(err);
     res.status(500).json({
       statusCode: 500,
       error: {
