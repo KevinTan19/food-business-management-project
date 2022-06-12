@@ -26,12 +26,15 @@ class Controller {
       //     ItemId: id,
       //   };
       // });
-      let payload = {
-        transactionNumber: `ABC${day}${month}${year}${hour}${second}-001`,
-        tableNumber,
-        status: false,
-        ItemId,
-      }; //DEMO ONLY
+      let transactionNumber = `ABC${day}${month}${year}${hour}${second}-001`;
+      let payload = [
+        {
+          transactionNumber,
+          tableNumber,
+          status: false,
+          ItemId,
+        },
+      ]; //DEMO ONLY
       const newTransaction = await Transaction.bulkCreate(payload, {
         transaction: t,
       });
@@ -51,7 +54,7 @@ class Controller {
         data: {
           transactionNumber: newTransaction.transactionNumber,
         },
-        message: "Item has been created successfully",
+        message: "Transaction has been created successfully",
       });
     } catch (err) {
       await t.rollback();
