@@ -4,6 +4,14 @@ const {
   Transaction,
   sequelize,
 } = require("../models/index");
+const Redis = require("ioredis");
+
+const redis = new Redis({
+  port: 19740, // Redis port
+  host: process.env.REDISHOST, // Redis host
+  username: "default", // needs Redis >= 6
+  password: process.env.REDISPASSWORD,
+});
 
 class Controller {
   static async createItem(req, res, next) {
@@ -14,6 +22,7 @@ class Controller {
         status: true,
         ManufactureId,
       });
+      await redis.flushall();
       res.status(201).json({
         statusCode: 201,
         data: {
@@ -29,15 +38,23 @@ class Controller {
 
   static async allItem(req, res, next) {
     try {
-      let listItem = await Item.findAll({
-        include: [Manufacture],
-        order: [["createdAt", "DESC"]],
-      });
-
-      res.status(200).json({
-        statusCode: 200,
-        data: listItem,
-      });
+      const items = await redis.get("items");
+      if (!items) {
+        let listItem = await Item.findAll({
+          include: [Manufacture],
+          order: [["createdAt", "DESC"]],
+        });
+        await redis.set("items", JSON.stringify(listItem));
+        res.status(200).json({
+          statusCode: 200,
+          data: listItem,
+        });
+      } else {
+        res.status(200).json({
+          statusCode: 200,
+          data: JSON.parse(items),
+        });
+      }
     } catch (err) {
       next(err);
     }
@@ -58,7 +75,7 @@ class Controller {
         },
         { where: { id: id }, returning: true }
       );
-
+      await redis.flushall();
       res.status(200).json({
         statusCode: 200,
         message: `Item ${id} updated from ${findItem.name} to ${updatedItem.name} with ManufactureID ${updatedItem.ManufactureId}`,
@@ -82,6 +99,7 @@ class Controller {
         },
         { where: { id: id }, returning: true }
       );
+      await redis.flushall();
       res.status(200).json({
         statusCode: 200,
         message: `Item ${id} status has been updated from ${findItem.status} to ${updatedItem.status}`,
@@ -107,6 +125,7 @@ class Controller {
         transaction: t,
       });
       await t.commit();
+      await redis.flushall();
       res.status(200).json({
         statusCode: 200,
         message: "Item deleted successfully",

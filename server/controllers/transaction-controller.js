@@ -84,31 +84,6 @@ class Controller {
     }
   }
 
-  //   static async editTransaction(req, res, next) {
-  //     try {
-  //       const { id } = req.params;
-  //       const { name, ManufactureId } = req.body;
-  //       const findItem = await Item.findByPk(id);
-  //       if (!findItem) {
-  //         throw { name: "Error not Found" };
-  //       }
-  //       const updatedItem = await Item.update(
-  //         {
-  //           name,
-  //           ManufactureId,
-  //         },
-  //         { where: { id: id }, returning: true }
-  //       );
-
-  //       res.status(200).json({
-  //         statusCode: 200,
-  //         message: `Item ${id} updated from ${findItem.name} to ${updatedItem.name} with ManufactureID ${updatedItem.ManufactureId}`,
-  //       });
-  //     } catch (err) {
-  //       next(err);
-  //     }
-  //   }
-
   static async editStatusTransaction(req, res, next) {
     try {
       const { id } = req.params;
