@@ -11,7 +11,7 @@ router.use("/user", user);
 router.use(authentication);
 router.use("/item", item);
 router.use("/manufacture", manufacture);
-router.use("/trasaction", transaction);
+router.use("/transaction", transaction);
 router.use("/report", report);
 
 module.exports = router;
