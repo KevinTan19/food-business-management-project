@@ -18,14 +18,20 @@ class Controller {
       let year = d.getFullYear();
       let hour = d.getHours();
       let second = d.getSeconds();
-      let payload = ItemId.map((id) => {
-        return {
-          transactionNumber: `ABC${day}${month}${year}${hour}${second}-001`,
-          tableNumber,
-          status: false,
-          ItemId: id,
-        };
-      });
+      // let payload = ItemId.map((id) => {
+      //   return {
+      //     transactionNumber: `ABC${day}${month}${year}${hour}${second}-001`,
+      //     tableNumber,
+      //     status: false,
+      //     ItemId: id,
+      //   };
+      // });
+      let payload = {
+        transactionNumber: `ABC${day}${month}${year}${hour}${second}-001`,
+        tableNumber,
+        status: false,
+        ItemId,
+      }; //DEMO ONLY
       const newTransaction = await Transaction.bulkCreate(payload, {
         transaction: t,
       });
