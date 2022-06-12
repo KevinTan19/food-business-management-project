@@ -78,7 +78,7 @@ class Controller {
       await redis.flushall();
       res.status(200).json({
         statusCode: 200,
-        message: `Item ${id} updated from ${findItem.name} to ${updatedItem.name} with ManufactureID ${updatedItem.ManufactureId}`,
+        message: `Item ${id} updated from ${findItem.name} to ${updatedItem[1][0].name} with ManufactureID ${updatedItem[1][0].ManufactureId}`,
       });
     } catch (err) {
       next(err);
@@ -88,21 +88,31 @@ class Controller {
   static async editStatusItem(req, res, next) {
     try {
       const { id } = req.params;
-      const status = req.body.status;
+      // const status = req.body.status;
       const findItem = await Item.findByPk(id);
       if (!findItem) {
         throw { name: "Error not Found" };
       }
-      const updatedItem = await Item.update(
-        {
-          status,
-        },
-        { where: { id: id }, returning: true }
-      );
+      let updatedItem;
+      if (findItem.status) {
+        updatedItem = await Item.update(
+          {
+            status: false,
+          },
+          { where: { id: id }, returning: true }
+        );
+      } else if (!findItem.status) {
+        updatedItem = await Item.update(
+          {
+            status: true,
+          },
+          { where: { id: id }, returning: true }
+        );
+      }
       await redis.flushall();
       res.status(200).json({
         statusCode: 200,
-        message: `Item ${id} status has been updated from ${findItem.status} to ${updatedItem.status}`,
+        message: `Item ${id} status has been updated from ${findItem.status} to ${updatedItem[1][0].status}`,
       });
     } catch (err) {
       next(err);

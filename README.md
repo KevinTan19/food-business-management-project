@@ -8,6 +8,7 @@ MVC works well with Javascript and it's framework, using the MVC methodology all
 
 - "npm i" on your terminal
 - add .env file (env keys are on .env example file)
+- "npm start" to run the app
 
 
 
